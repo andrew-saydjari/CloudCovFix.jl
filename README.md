@@ -1,6 +1,6 @@
 # CloudCovFix.jl <img src="docs/src/assets/logo.png" alt="CloudCovFix Logo" width="100" align="right"/>
 
-[![][docs-dev-img]][docs-dev-url]
+<!-- [![][docs-dev-img]][docs-dev-url]-->
 [![][action-img]][action-url]
 [![][codecov-img]][codecov-url]
 [![][arxiv-img]][arxiv-url]
