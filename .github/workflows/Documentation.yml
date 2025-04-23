@@ -10,15 +10,11 @@ jobs:
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@latest
         with:
-          version: '1.6'
+          version: '1.11'
       - name: Install dependencies
         run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
         env:
           PYTHON: ""
-      - name: "Fix Conda"
-        env:
-          PYTHON: ""
-        run: julia -e 'using Pkg; Pkg.add("PyCall"); using PyCall; PyCall.Conda.add(["python=3.9","crowdsourcephoto=0.5.6","scipy==1.6.1","astropy=5.2.2"]); Pkg.build("PyCall")'
       - name: Build and deploy
         env:
           PYTHON: ""

@@ -1,6 +1,6 @@
-module tst_pre
+module tst_preprocess
     using Test
-    using CloudCovErr
+    using CloudCovFix
     using Random
 
     # Random generators do not promise the same streams between
