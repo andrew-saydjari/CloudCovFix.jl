@@ -40,11 +40,11 @@ module tst_preprocess
          ]
         add_noise!(refin,2;seed=2021)
         ref = [
-         12.0   9.5  10.0 ;
-         31.5  70.5  18.0 ;
-         19.0  25.5  19.5 ;
+          10.0  12.5  14.5 ;
+          32.5  52.0  20.5 ;
+          20.5  28.5  20.0 ;
          ]
-        @test abs(refin[2,2]-70.5) < 10
+        @test abs(refin[2,2]-52.0) < 10
 
         skyim = 10 .*ones(3,3)
         maskim = zeros(Bool,3,3)
