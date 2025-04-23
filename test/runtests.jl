@@ -1,5 +1,5 @@
 using Test
-using CloudCovErr
+using CloudCovFix
 
 tests = [
     "tst_preprocess.jl",
