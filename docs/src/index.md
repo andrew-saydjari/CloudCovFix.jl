@@ -1,4 +1,4 @@
-# CloudCovErr.jl
+# CloudCovFix.jl
 
 [![GitHub](https://img.shields.io/badge/Code-GitHub-black.svg)](https://github.com/andrew-saydjari/CloudCovFix.jl)
 [![Build Status](https://github.com/andrew-saydjari/CloudCovFix.jl/workflows/Unit%20test/badge.svg)](https://github.com/andrew-saydjari/CloudCovFix.jl/actions)
@@ -17,10 +17,10 @@ Pkg.add(url="https://github.com/andrew-saydjari/CloudCovFix.jl")
 
 ## Usage
 
-To start, load the `CloudCovErr.jl` package:
+To start, load the `CloudCovFix.jl` package:
 
 ```julia
-using CloudCovErr
+using CloudCovFix
 ```
 
 For now, please refer to examples in the release paper and its accompanying Zenodo repository. An end-to-end demonstration of this code applied to the DECaPS2 survey begins with calling the `decaps2.jl` found in the original `CloudCovErr.jl` repository.
@@ -31,7 +31,7 @@ Use of individual functions is documented here in the API Reference page.
 
 ### Quality Flag
 
-The `dnt:Int8` flag from **CloudCovErr** indicates the following:
+The `dnt:Int8` flag from **CloudCovFix** indicates the following:
 
 | Value         | Bit         | Meaning     |
 | ----------- | ----------- | ----------- |
