@@ -29,16 +29,3 @@ add_noise!
 findmaxpsf
 kstar_circle_mask
 ```
-
-## DECam Specific Functions
-
-```@docs
-CloudCovErr.decam.read_decam
-CloudCovErr.decam.read_crowdsource
-CloudCovErr.decam.inject_rename
-CloudCovErr.decam.load_psfmodel_cs
-CloudCovErr.decam.save_fxn
-CloudCovErr.decam.get_catnames
-CloudCovErr.decam.proc_ccd
-CloudCovErr.decam.proc_all
-```
