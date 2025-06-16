@@ -9,10 +9,37 @@ export gen_mask_staticPSF! #
 export gen_mask_staticPSF2! #
 export prelim_infill! #
 export add_sky_noise! #
+export add_sky_noise_clean! #
 export add_noise! #
 export findmaxpsf #
 export kstar_circle_mask #
 export im_subrng #
+export sig_iqr
+
+## want to change rlim so it is linear radius, rather than R^2
+
+
+"""
+    sig_iqr(x)
+
+Calculate the normalized interquartile range (IQR) of an array as a robust measure of standard deviation.
+
+# Arguments
+- `x`: A 1D array or iterable.
+
+# Returns
+- The normalized IQR, computed as the IQR divided by 1.34896.
+
+# Examples
+```julia
+julia> x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+julia> result = sig_iqr(x)
+```
+"""
+function sig_iqr(x)
+    return iqr(x)/1.34896
+end
+
 
 """
     kstar_circle_mask(Np;rlim=256) -> circmask
@@ -237,7 +264,7 @@ infill values.
 - `ftype::Int`: determine the Float precision, 32 is Float32, otherwise Float64
 - `widmult`: multiplicative factor for increasing the smoothing scale at each iteration step
 """
-function prelim_infill!(testim,bmaskim,bimage,bimageI,testim2,bmaskim2,goodpix,ccd;widx=19,widy=19,ftype::Int=32,widmult=1.4)
+function prelim_infill!(testim,bmaskim,bimage,bimageI,testim2,bmaskim2,goodpix;widx=19,widy=19,ftype::Int=32,widmult=1.4)
     if ftype == 32
         T = Float32
     else
@@ -287,7 +314,7 @@ function prelim_infill!(testim,bmaskim,bimage,bimageI,testim2,bmaskim2,goodpix,c
         Δx = (widx-1)÷2
         Δy = (widy-1)÷2
     end
-    println("Infilling $ccd completed after $cnt rounds with final width (widx,widy) = ($widx,$widy)")
+    println("Infilling completed after $cnt rounds with final width (widx,widy) = ($widx,$widy)")
     flush(stdout)
 
     #catastrophic failure fallback
@@ -326,13 +353,48 @@ function add_sky_noise!(testim2,maskim,skyim,gain;seed=2021)
 end
 
 """
+    add_sky_noise_clean!(testim2, maskim, sig_iqr; seed=2021)
+
+Add sky noise to pixels in an image specified by a given mask.
+
+# Arguments:
+- `testim2`: A mutable 2D array representing the image.
+- `maskim`: A 2D array representing the mask.
+- `sig_iqr`: The standard deviation of the noise distribution, generally calculated as the normalized IQR.
+
+# Keywords:
+- `seed`: An optional integer specifying the random number generator seed (default: 2021).
+
+# Returns:
+- Modifies `testim2` in place by adding sky noise to the masked pixels.
+
+# Examples:
+```julia
+julia> testim2 = rand(100, 100)
+julia> maskim = rand(Bool, 100, 100)
+julia> sig_iqr = 0.5
+julia> add_sky_noise!(testim2, maskim, sig_iqr, seed=2021)
+```
+"""
+function add_sky_noise_clean!(testim2,maskim,sig_iqr;seed=2021)
+    rng = MersenneTwister(seed)
+    dist = Distributions.Normal(0,sig_iqr)
+    for i in eachindex(testim2)
+        if maskim[i]
+            testim2[i] += rand(rng, dist)
+        end
+    end
+end
+
+
+"""
     add_noise!(testim2,gain;seed=2021)
 
 Adds noise to an image that matches the Poisson noise of the pixel counts.
 A random seed to set a local random generator is provided for reproducible unit testing.
 
 # Arguments:
-- `testim2`: input image which had infilling
+- `testim2`: input image which had infillingv
 - `gain`: gain of detector to convert from photon count noise to detector noise
 
 # Keywords:
