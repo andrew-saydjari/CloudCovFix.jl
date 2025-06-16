@@ -1,10 +1,9 @@
 # CloudCovFix.jl <img src="docs/src/assets/logo.png" alt="CloudCovFix Logo" width="100" align="right"/>
 
-<!-- [![][docs-dev-img]][docs-dev-url]-->
+[![][docs-dev-img]][docs-dev-url]
 [![][action-img]][action-url]
 [![][codecov-img]][codecov-url]
 [![][arxiv-img]][arxiv-url]
-<!--[![][Pkg-img]][Pkg-url]-->
 
 Pipeline for debiasing and improving error bar estimates for photometry on top of structured/filamentary background. The procedure first estimates the covariance matrix of the residuals from a previous photometric model and then computes corrections to the estimated flux and flux uncertainties.
 
